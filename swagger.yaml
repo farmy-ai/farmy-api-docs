@@ -1,0 +1,732 @@
+swagger: '2.0'
+info:
+  title: Snippets API
+  version: v1
+basePath: /api/v1
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /anomalies/:
+    get:
+      operationId: anomalies_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Anomaly'
+      tags:
+        - anomalies
+    post:
+      operationId: anomalies_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Anomaly'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Anomaly'
+      tags:
+        - anomalies
+    parameters: []
+  /anomalies/history/:
+    get:
+      operationId: anomalies_history_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Anomaly'
+      tags:
+        - anomalies
+    parameters: []
+  /anomalies/{anomaly_pk}/solutions/:
+    post:
+      operationId: anomalies_solutions_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AnomalyExpertSolution'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/AnomalyExpertSolution'
+      tags:
+        - anomalies
+    parameters:
+      - name: anomaly_pk
+        in: path
+        required: true
+        type: string
+  /anomalies/{id}:
+    get:
+      operationId: anomalies_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Anomaly'
+      tags:
+        - anomalies
+    put:
+      operationId: anomalies_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Anomaly'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Anomaly'
+      tags:
+        - anomalies
+    patch:
+      operationId: anomalies_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Anomaly'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Anomaly'
+      tags:
+        - anomalies
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+  /auth/email/resend-confirm/:
+    post:
+      operationId: auth_email_resend-confirm_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ResendConfirm'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResendConfirm'
+      tags:
+        - auth
+    parameters: []
+  /auth/email/verify/:
+    post:
+      operationId: auth_email_verify_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/VerifyEmail'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/VerifyEmail'
+      tags:
+        - auth
+    parameters: []
+  /auth/password/change/:
+    post:
+      operationId: auth_password_change_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PasswordChange'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/PasswordChange'
+      tags:
+        - auth
+    parameters: []
+  /auth/password/reset/:
+    post:
+      operationId: auth_password_reset_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PasswordReset'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/PasswordReset'
+      tags:
+        - auth
+    parameters: []
+  /auth/password/reset/confirm/:
+    post:
+      operationId: auth_password_reset_confirm_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PasswordResetConfirm'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/PasswordResetConfirm'
+      tags:
+        - auth
+    parameters: []
+  /auth/signin/:
+    post:
+      operationId: auth_signin_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SignIn'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SignIn'
+      tags:
+        - auth
+    parameters: []
+  /auth/signout/:
+    post:
+      operationId: auth_signout_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SignOut'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SignOut'
+      tags:
+        - auth
+    parameters: []
+  /auth/signup/:
+    post:
+      operationId: auth_signup_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SignUp'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/SignUp'
+      tags:
+        - auth
+    parameters: []
+  /auth/token/refresh/:
+    post:
+      operationId: auth_token_refresh_create
+      description: "Takes a refresh type JSON web token and returns an access type\
+        \ JSON web\ntoken if the refresh token is valid."
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TokenRefresh'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/TokenRefresh'
+      tags:
+        - auth
+    parameters: []
+  /auth/user/:
+    get:
+      operationId: auth_user_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserDetails'
+      tags:
+        - auth
+    put:
+      operationId: auth_user_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserDetails'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserDetails'
+      tags:
+        - auth
+    patch:
+      operationId: auth_user_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserDetails'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserDetails'
+      tags:
+        - auth
+    parameters: []
+  /auth/user/player_id:
+    post:
+      operationId: auth_user_player_id_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AddPlayerId'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/AddPlayerId'
+      tags:
+        - auth
+    parameters: []
+  /test-model:
+    post:
+      operationId: test-model_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TestModel'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/TestModel'
+      tags:
+        - test-model
+    parameters: []
+definitions:
+  UserDetails:
+    title: Farmer
+    required:
+      - address
+      - phone
+      - crop_type
+      - domain
+      - expertise
+    type: object
+    properties:
+      email:
+        title: Email address
+        type: string
+        format: email
+        readOnly: true
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 30
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      address:
+        title: Address
+        type: string
+        maxLength: 256
+        minLength: 1
+      phone:
+        title: Phone
+        type: string
+        maxLength: 16
+        minLength: 1
+      role:
+        title: Role
+        type: string
+        enum:
+          - admin
+          - farmer
+          - expert
+        readOnly: true
+      crop_type:
+        title: Crop type
+        type: string
+        enum:
+          - potato
+          - tomato
+      domain:
+        title: Domain
+        type: string
+        enum:
+          - potato
+          - tomato
+      expertise:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  AnomalyImage:
+    type: object
+    properties:
+      image:
+        title: Image
+        type: string
+        readOnly: true
+        format: uri
+  AnomalyExpertSolution:
+    required:
+      - diag
+      - treatement
+      - description
+    type: object
+    properties:
+      expert:
+        $ref: '#/definitions/UserDetails'
+      diag:
+        title: Diag
+        type: string
+        maxLength: 256
+        minLength: 1
+      treatement:
+        title: Treatement
+        type: string
+        maxLength: 256
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 1024
+        minLength: 1
+  Anomaly:
+    required:
+      - title
+      - image1
+      - image2
+      - image3
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 128
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 1024
+      farmer:
+        readOnly: true
+        $ref: '#/definitions/UserDetails'
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      model_diag:
+        title: Model diag
+        type: string
+        readOnly: true
+        minLength: 1
+      model_confidence:
+        title: Model confidence
+        type: integer
+        readOnly: true
+      images:
+        type: array
+        items:
+          $ref: '#/definitions/AnomalyImage'
+        readOnly: true
+      expert_solutions:
+        type: array
+        items:
+          $ref: '#/definitions/AnomalyExpertSolution'
+        readOnly: true
+      image1:
+        title: Image1
+        type: string
+        writeOnly: true
+        format: uri
+      image2:
+        title: Image2
+        type: string
+        writeOnly: true
+        format: uri
+      image3:
+        title: Image3
+        type: string
+        writeOnly: true
+        format: uri
+      image4:
+        title: Image4
+        type: string
+        writeOnly: true
+        format: uri
+      image5:
+        title: Image5
+        type: string
+        writeOnly: true
+        format: uri
+      seen:
+        title: Seen
+        type: string
+        readOnly: true
+  ResendConfirm:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+  VerifyEmail:
+    required:
+      - uid
+      - key
+    type: object
+    properties:
+      uid:
+        title: Uid
+        type: string
+        minLength: 1
+      key:
+        title: Key
+        type: string
+        minLength: 1
+  PasswordChange:
+    required:
+      - old_password
+      - new_password
+    type: object
+    properties:
+      old_password:
+        title: Old password
+        type: string
+        maxLength: 128
+        minLength: 1
+      new_password:
+        title: New password
+        type: string
+        maxLength: 128
+        minLength: 1
+  PasswordReset:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+  PasswordResetConfirm:
+    required:
+      - new_password
+      - uid
+      - key
+    type: object
+    properties:
+      new_password:
+        title: New password
+        type: string
+        maxLength: 128
+        minLength: 1
+      uid:
+        title: Uid
+        type: string
+        minLength: 1
+      key:
+        title: Key
+        type: string
+        minLength: 1
+  SignIn:
+    required:
+      - email
+      - password
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+  SignOut:
+    required:
+      - player_id
+    type: object
+    properties:
+      player_id:
+        title: Player id
+        type: string
+        minLength: 1
+  SignUp:
+    required:
+      - email
+      - password
+      - address
+      - phone
+      - first_name
+      - last_name
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        minLength: 1
+      address:
+        title: Address
+        type: string
+        maxLength: 256
+        minLength: 1
+      phone:
+        title: Phone
+        type: string
+        maxLength: 16
+        minLength: 1
+      role:
+        title: Role
+        type: string
+        enum:
+          - admin
+          - farmer
+          - expert
+      crop_type:
+        title: Crop type
+        type: string
+        enum:
+          - potato
+          - tomato
+      domain:
+        title: Domain
+        type: string
+        enum:
+          - potato
+          - tomato
+      first_name:
+        title: First name
+        type: string
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        minLength: 1
+  TokenRefresh:
+    required:
+      - refresh
+    type: object
+    properties:
+      refresh:
+        title: Refresh
+        type: string
+        minLength: 1
+  AddPlayerId:
+    required:
+      - player_id
+    type: object
+    properties:
+      player_id:
+        title: Player id
+        type: string
+        minLength: 1
+  TestModel:
+    required:
+      - token
+    type: object
+    properties:
+      token:
+        title: Token
+        type: string
+        minLength: 1
+      image:
+        title: Image
+        type: string
+        readOnly: true
+        format: uri
