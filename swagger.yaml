@@ -1,22 +1,26 @@
 swagger: '2.0'
 info:
   title: Farmy API
-  version: v1
+  description: API description in Markdown.
+  version: 1.0.0
 basePath: /api/v1
 consumes:
   - application/json
 produces:
   - application/json
+
 securityDefinitions:
-  Basic:
-    type: basic
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
 security:
-  - Basic: []
+  - ApiKeyAuth: [] 
+
 paths:
   /anomalies/:
     get:
-      operationId: anomalies_list
-      description: ''
+      operationId: List Anomalies
       parameters: []
       responses:
         '200':
@@ -28,7 +32,7 @@ paths:
       tags:
         - anomalies
     post:
-      operationId: anomalies_create
+      operationId: Create Anomaly
       description: ''
       parameters:
         - name: data
@@ -44,24 +48,9 @@ paths:
       tags:
         - anomalies
     parameters: []
-  /anomalies/history/:
-    get:
-      operationId: anomalies_history_list
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Anomaly'
-      tags:
-        - anomalies
-    parameters: []
   /anomalies/{anomaly_pk}/solutions/:
     post:
-      operationId: anomalies_solutions_create
+      operationId: Add Anomaly Solution
       description: ''
       parameters:
         - name: data
@@ -83,7 +72,7 @@ paths:
         type: string
   /anomalies/{id}:
     get:
-      operationId: anomalies_read
+      operationId: Get Anomaly Details
       description: ''
       parameters: []
       responses:
@@ -94,23 +83,7 @@ paths:
       tags:
         - anomalies
     put:
-      operationId: anomalies_update
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/Anomaly'
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/Anomaly'
-      tags:
-        - anomalies
-    patch:
-      operationId: anomalies_partial_update
+      operationId: Mark Anomaly As Seen
       description: ''
       parameters:
         - name: data
@@ -130,250 +103,7 @@ paths:
         in: path
         required: true
         type: string
-  /auth/email/resend-confirm/:
-    post:
-      operationId: auth_email_resend-confirm_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/ResendConfirm'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/ResendConfirm'
-      tags:
-        - auth
-    parameters: []
-  /auth/email/verify/:
-    post:
-      operationId: auth_email_verify_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/VerifyEmail'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/VerifyEmail'
-      tags:
-        - auth
-    parameters: []
-  /auth/password/change/:
-    post:
-      operationId: auth_password_change_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/PasswordChange'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/PasswordChange'
-      tags:
-        - auth
-    parameters: []
-  /auth/password/reset/:
-    post:
-      operationId: auth_password_reset_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/PasswordReset'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/PasswordReset'
-      tags:
-        - auth
-    parameters: []
-  /auth/password/reset/confirm/:
-    post:
-      operationId: auth_password_reset_confirm_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/PasswordResetConfirm'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/PasswordResetConfirm'
-      tags:
-        - auth
-    parameters: []
-  /auth/signin/:
-    post:
-      operationId: auth_signin_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/SignIn'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/SignIn'
-      tags:
-        - auth
-    parameters: []
-  /auth/signout/:
-    post:
-      operationId: auth_signout_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/SignOut'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/SignOut'
-      tags:
-        - auth
-    parameters: []
-  /auth/signup/:
-    post:
-      operationId: auth_signup_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/SignUp'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/SignUp'
-      tags:
-        - auth
-    parameters: []
-  /auth/token/refresh/:
-    post:
-      operationId: auth_token_refresh_create
-      description: "Takes a refresh type JSON web token and returns an access type\
-        \ JSON web\ntoken if the refresh token is valid."
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/TokenRefresh'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/TokenRefresh'
-      tags:
-        - auth
-    parameters: []
-  /auth/user/:
-    get:
-      operationId: auth_user_read
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/UserDetails'
-      tags:
-        - auth
-    put:
-      operationId: auth_user_update
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/UserDetails'
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/UserDetails'
-      tags:
-        - auth
-    patch:
-      operationId: auth_user_partial_update
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/UserDetails'
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/UserDetails'
-      tags:
-        - auth
-    parameters: []
-  /auth/user/player_id:
-    post:
-      operationId: auth_user_player_id_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/AddPlayerId'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/AddPlayerId'
-      tags:
-        - auth
-    parameters: []
-  /test-model:
-    post:
-      operationId: test-model_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/TestModel'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/TestModel'
-      tags:
-        - test-model
-    parameters: []
+
 definitions:
   UserDetails:
     title: Farmer
@@ -488,8 +218,9 @@ definitions:
         type: string
         maxLength: 1024
       farmer:
+        allOf:
+          -  $ref: '#/definitions/UserDetails'
         readOnly: true
-        $ref: '#/definitions/UserDetails'
       created:
         title: Created
         type: string
@@ -523,27 +254,27 @@ definitions:
         title: Image1
         type: string
         writeOnly: true
-        format: uri
+        format: base64
       image2:
         title: Image2
         type: string
         writeOnly: true
-        format: uri
+        format: base64
       image3:
         title: Image3
         type: string
         writeOnly: true
-        format: uri
+        format: base64
       image4:
         title: Image4
         type: string
         writeOnly: true
-        format: uri
+        format: base64
       image5:
         title: Image5
         type: string
         writeOnly: true
-        format: uri
+        format: base64
       seen:
         title: Seen
         type: string
