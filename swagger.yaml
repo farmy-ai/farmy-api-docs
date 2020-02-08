@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Snippets API
+  title: Farmy API
   version: v1
 basePath: /api/v1
 consumes:
