@@ -1,9 +1,19 @@
 swagger: '2.0'
+
 info:
   title: Farmy API
-  description: API description in Markdown.
-  version: 1.0.0
+  description: Farmy API description and specs
+  version: 0.1.0
+  x-logo:
+    url: "icon.png"
+    backgroundColor: "#FFFFFF"
+    altText: "Farmy Ai logo"
+
+host: api.farmy.ai
 basePath: /api/v1
+schemes:
+  - https
+
 consumes:
   - application/json
 produces:
@@ -29,11 +39,12 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Anomaly'
-      tags:
-        - anomalies
+
     post:
       operationId: Create Anomaly
       description: ''
+      consumes:
+        - multipart/form-data
       parameters:
         - name: data
           in: body
@@ -45,8 +56,7 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/Anomaly'
-      tags:
-        - anomalies
+
     parameters: []
   /anomalies/{anomaly_pk}/solutions/:
     post:
@@ -63,8 +73,7 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/AnomalyExpertSolution'
-      tags:
-        - anomalies
+
     parameters:
       - name: anomaly_pk
         in: path
@@ -80,24 +89,15 @@ paths:
           description: ''
           schema:
             $ref: '#/definitions/Anomaly'
-      tags:
-        - anomalies
+
     put:
       operationId: Mark Anomaly As Seen
       description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/Anomaly'
+      parameters: []
       responses:
         '200':
           description: ''
-          schema:
-            $ref: '#/definitions/Anomaly'
-      tags:
-        - anomalies
+
     parameters:
       - name: id
         in: path
@@ -105,65 +105,64 @@ paths:
         type: string
 
 definitions:
-  UserDetails:
+  FarmerDetails:
     title: Farmer
-    required:
-      - address
-      - phone
-      - crop_type
-      - domain
-      - expertise
     type: object
     properties:
       email:
         title: Email address
         type: string
         format: email
-        readOnly: true
-        minLength: 1
       first_name:
         title: First name
         type: string
-        maxLength: 30
       last_name:
         title: Last name
         type: string
-        maxLength: 150
       address:
         title: Address
         type: string
-        maxLength: 256
-        minLength: 1
       phone:
         title: Phone
         type: string
-        maxLength: 16
-        minLength: 1
       role:
         title: Role
         type: string
-        enum:
-          - admin
-          - farmer
-          - expert
-        readOnly: true
       crop_type:
         title: Crop type
         type: string
-        enum:
-          - potato
-          - tomato
+
+  ExpertDetails:
+    title: Expert
+    type: object
+    properties:
+      email:
+        title: Email address
+        type: string
+        format: email
+      first_name:
+        title: First name
+        type: string
+      last_name:
+        title: Last name
+        type: string
+      address:
+        title: Address
+        type: string
+      phone:
+        title: Phone
+        type: string
+      role:
+        title: Role
+        type: string
       domain:
         title: Domain
         type: string
-        enum:
-          - potato
-          - tomato
       expertise:
         type: array
         items:
           type: string
-          minLength: 1
+
   AnomalyImage:
     type: object
     properties:
@@ -180,22 +179,18 @@ definitions:
     type: object
     properties:
       expert:
-        $ref: '#/definitions/UserDetails'
+        allOf:
+          -  $ref: '#/definitions/ExpertDetails'
+        readOnly: true
       diag:
         title: Diag
         type: string
-        maxLength: 256
-        minLength: 1
       treatement:
         title: Treatement
         type: string
-        maxLength: 256
-        minLength: 1
       description:
         title: Description
         type: string
-        maxLength: 1024
-        minLength: 1
   Anomaly:
     required:
       - title
@@ -211,15 +206,12 @@ definitions:
       title:
         title: Title
         type: string
-        maxLength: 128
-        minLength: 1
       description:
         title: Description
         type: string
-        maxLength: 1024
       farmer:
         allOf:
-          -  $ref: '#/definitions/UserDetails'
+          -  $ref: '#/definitions/FarmerDetails'
         readOnly: true
       created:
         title: Created
@@ -235,7 +227,6 @@ definitions:
         title: Model diag
         type: string
         readOnly: true
-        minLength: 1
       model_confidence:
         title: Model confidence
         type: integer
@@ -254,210 +245,28 @@ definitions:
         title: Image1
         type: string
         writeOnly: true
-        format: base64
+        format: binary
       image2:
         title: Image2
         type: string
         writeOnly: true
-        format: base64
+        format: binary
       image3:
         title: Image3
         type: string
         writeOnly: true
-        format: base64
+        format: binary
       image4:
         title: Image4
         type: string
         writeOnly: true
-        format: base64
+        format: binary
       image5:
         title: Image5
         type: string
         writeOnly: true
-        format: base64
+        format: binary
       seen:
         title: Seen
         type: string
         readOnly: true
-  ResendConfirm:
-    required:
-      - email
-    type: object
-    properties:
-      email:
-        title: Email
-        type: string
-        format: email
-        minLength: 1
-  VerifyEmail:
-    required:
-      - uid
-      - key
-    type: object
-    properties:
-      uid:
-        title: Uid
-        type: string
-        minLength: 1
-      key:
-        title: Key
-        type: string
-        minLength: 1
-  PasswordChange:
-    required:
-      - old_password
-      - new_password
-    type: object
-    properties:
-      old_password:
-        title: Old password
-        type: string
-        maxLength: 128
-        minLength: 1
-      new_password:
-        title: New password
-        type: string
-        maxLength: 128
-        minLength: 1
-  PasswordReset:
-    required:
-      - email
-    type: object
-    properties:
-      email:
-        title: Email
-        type: string
-        format: email
-        minLength: 1
-  PasswordResetConfirm:
-    required:
-      - new_password
-      - uid
-      - key
-    type: object
-    properties:
-      new_password:
-        title: New password
-        type: string
-        maxLength: 128
-        minLength: 1
-      uid:
-        title: Uid
-        type: string
-        minLength: 1
-      key:
-        title: Key
-        type: string
-        minLength: 1
-  SignIn:
-    required:
-      - email
-      - password
-    type: object
-    properties:
-      email:
-        title: Email
-        type: string
-        format: email
-        minLength: 1
-      password:
-        title: Password
-        type: string
-        minLength: 1
-  SignOut:
-    required:
-      - player_id
-    type: object
-    properties:
-      player_id:
-        title: Player id
-        type: string
-        minLength: 1
-  SignUp:
-    required:
-      - email
-      - password
-      - address
-      - phone
-      - first_name
-      - last_name
-    type: object
-    properties:
-      email:
-        title: Email
-        type: string
-        format: email
-        minLength: 1
-      password:
-        title: Password
-        type: string
-        minLength: 1
-      address:
-        title: Address
-        type: string
-        maxLength: 256
-        minLength: 1
-      phone:
-        title: Phone
-        type: string
-        maxLength: 16
-        minLength: 1
-      role:
-        title: Role
-        type: string
-        enum:
-          - admin
-          - farmer
-          - expert
-      crop_type:
-        title: Crop type
-        type: string
-        enum:
-          - potato
-          - tomato
-      domain:
-        title: Domain
-        type: string
-        enum:
-          - potato
-          - tomato
-      first_name:
-        title: First name
-        type: string
-        minLength: 1
-      last_name:
-        title: Last name
-        type: string
-        minLength: 1
-  TokenRefresh:
-    required:
-      - refresh
-    type: object
-    properties:
-      refresh:
-        title: Refresh
-        type: string
-        minLength: 1
-  AddPlayerId:
-    required:
-      - player_id
-    type: object
-    properties:
-      player_id:
-        title: Player id
-        type: string
-        minLength: 1
-  TestModel:
-    required:
-      - token
-    type: object
-    properties:
-      token:
-        title: Token
-        type: string
-        minLength: 1
-      image:
-        title: Image
-        type: string
-        readOnly: true
-        format: uri
