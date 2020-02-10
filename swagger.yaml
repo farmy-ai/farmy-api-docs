@@ -63,27 +63,6 @@ paths:
             $ref: '#/definitions/Anomaly'
 
     parameters: []
-  /anomalies/{anomaly_pk}/solutions/:
-    post:
-      operationId: Add Anomaly Solution
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/AnomalyExpertSolution'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/AnomalyExpertSolution'
-
-    parameters:
-      - name: anomaly_pk
-        in: path
-        required: true
-        type: string
   /anomalies/{id}:
     get:
       operationId: Get Anomaly Details
@@ -108,7 +87,7 @@ paths:
         in: path
         required: true
         type: string
-  /auth/signup/:
+  /user-key/:
     post:
       operationId: Generate User Key
       description: ''
@@ -150,12 +129,6 @@ definitions:
       phone:
         title: Phone
         type: string
-      role:
-        title: Role
-        type: string
-      crop_type:
-        title: Crop type
-        type: string
 
   ExpertDetails:
     title: Expert
@@ -176,9 +149,6 @@ definitions:
         type: string
       phone:
         title: Phone
-        type: string
-      role:
-        title: Role
         type: string
       domain:
         title: Domain
