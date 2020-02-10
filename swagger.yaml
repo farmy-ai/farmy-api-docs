@@ -103,7 +103,25 @@ paths:
         in: path
         required: true
         type: string
-
+  /auth/signup/:
+    post:
+      operationId: Generate User Key
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserKey'
+      responses:
+        '201':
+          description: ''
+          schema:
+            type: object
+            properties:
+              key:
+                type: string
+    parameters: []
 definitions:
   FarmerDetails:
     title: Farmer
@@ -270,3 +288,28 @@ definitions:
         title: Seen
         type: string
         readOnly: true
+  UserKey:
+    required:
+      - email
+      - address
+      - phone
+      - first_name
+      - last_name
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+      address:
+        title: Address
+        type: string
+      phone:
+        title: Phone
+        type: string
+      first_name:
+        title: First name
+        type: string
+      last_name:
+        title: Last name
+        type: string
