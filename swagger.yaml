@@ -24,8 +24,13 @@ securityDefinitions:
       type: apiKey
       in: header
       name: X-API-KEY
+    UserKeyAuth:
+      type: apiKey
+      in: header
+      name: X-USER-KEY
 security:
-  - ApiKeyAuth: [] 
+  - ApiKeyAuth: []
+    UserKeyAuth: []
 
 paths:
   /anomalies/:
@@ -107,6 +112,8 @@ paths:
     post:
       operationId: Generate User Key
       description: ''
+      security:
+        - ApiKeyAuth: []
       parameters:
         - name: data
           in: body
