@@ -24,13 +24,13 @@ securityDefinitions:
       type: apiKey
       in: header
       name: X-API-KEY
-    UserKeyAuth:
-      type: apiKey
-      in: header
-      name: X-USER-KEY
+    UserTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token 153c6c7a4acc77045eb627664fa4d4d1f6f2203b  
 security:
   - ApiKeyAuth: []
-    UserKeyAuth: []
+    UserTokenAuth: []
 
 paths:
   /anomalies/:
@@ -87,9 +87,9 @@ paths:
         in: path
         required: true
         type: string
-  /user-key/:
+  /auth/generate-token/:
     post:
-      operationId: Generate User Key
+      operationId: Generate User Token
       description: ''
       security:
         - ApiKeyAuth: []
@@ -105,7 +105,7 @@ paths:
           schema:
             type: object
             properties:
-              key:
+              token:
                 type: string
     parameters: []
 definitions:
